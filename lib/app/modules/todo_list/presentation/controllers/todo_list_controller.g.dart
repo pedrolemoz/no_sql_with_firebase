@@ -38,6 +38,14 @@ mixin _$TodoListController on _TodoListControllerBase, Store {
     });
   }
 
+  final _$_getAllTodoItemsAsyncAction =
+      AsyncAction('_TodoListControllerBase._getAllTodoItems');
+
+  @override
+  Future<void> _getAllTodoItems() {
+    return _$_getAllTodoItemsAsyncAction.run(() => super._getAllTodoItems());
+  }
+
   final _$addNewTodoItemAsyncAction =
       AsyncAction('_TodoListControllerBase.addNewTodoItem');
 
@@ -62,20 +70,6 @@ mixin _$TodoListController on _TodoListControllerBase, Store {
   Future<void> toggleItemValue({int itemIndex, bool newValue}) {
     return _$toggleItemValueAsyncAction.run(
         () => super.toggleItemValue(itemIndex: itemIndex, newValue: newValue));
-  }
-
-  final _$_TodoListControllerBaseActionController =
-      ActionController(name: '_TodoListControllerBase');
-
-  @override
-  void _getAllTodoItems() {
-    final _$actionInfo = _$_TodoListControllerBaseActionController.startAction(
-        name: '_TodoListControllerBase._getAllTodoItems');
-    try {
-      return super._getAllTodoItems();
-    } finally {
-      _$_TodoListControllerBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override

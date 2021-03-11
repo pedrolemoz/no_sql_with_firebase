@@ -1,1 +1,1 @@
-class FirebaseException implements Exception {}
+class DataSourceException implements Exception {}

@@ -19,7 +19,7 @@ class DeleteItemFromCollection implements AsyncUsecase<void, TodoItem> {
     if (item.description.isNotEmpty &&
         item.description != null &&
         item.description != '') {
-      return await repository.deleteItemFromCollection(item);
+      return await repository.deleteItem(item);
     } else {
       return left(InvalidItemFailure());
     }

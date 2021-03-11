@@ -33,24 +33,16 @@ abstract class _TodoListControllerBase with Store {
   var todoItems = <TodoItemModel>[].asObservable();
 
   @action
-  void _getAllTodoItems() {
-    var dataStream = getAllItemsFromCollection(NoParams());
+  Future<void> _getAllTodoItems() async {
+    var result = await getAllItemsFromCollection(NoParams());
 
-    dataStream.fold(
-      (error) => print('$error error occurred when trying to get all items'),
-      (data) => data.listen(
-        (snapshot) {
-          final items = snapshot.documents
-              .map<TodoItemModel>(
-                  (document) => TodoItemModel.fromMap(document.data))
-              .toList();
+    result.fold(
+        (error) => print('$error error occurred when trying to get all items'),
+        (data) {
+      todoItems = (data as List<TodoItemModel>).asObservable();
 
-          todoItems = ObservableList.of(items);
-
-          print('All items has been updated');
-        },
-      ),
-    );
+      print('All items has been updated');
+    });
   }
 
   @action
@@ -58,11 +50,13 @@ abstract class _TodoListControllerBase with Store {
     final operationResult = await addNewItemToCollection(newItem);
 
     operationResult.fold(
-      (error) => print(
-          '$error error occurred when trying to add ${newItem.description}'),
-      (data) =>
-          print('${newItem.description} was added with value ${newItem.value}'),
-    );
+        (error) => print(
+            '$error error occurred when trying to add ${newItem.description}'),
+        (data) {
+      print('${newItem.description} was added with value ${newItem.value}');
+
+      _getAllTodoItems();
+    });
   }
 
   @action
@@ -71,11 +65,13 @@ abstract class _TodoListControllerBase with Store {
     final operationResult = await deleteItemFromCollection(item);
 
     operationResult.fold(
-      (error) => print(
-          '$error error occurred when trying to delete ${item.description}'),
-      (data) =>
-          print('${item.description} with value ${item.value} was deleted'),
-    );
+        (error) => print(
+            '$error error occurred when trying to delete ${item.description}'),
+        (data) {
+      print('${item.description} with value ${item.value} was deleted');
+
+      _getAllTodoItems();
+    });
   }
 
   @action
@@ -89,7 +85,11 @@ abstract class _TodoListControllerBase with Store {
     operationResult.fold(
       (error) => print(
           '$error error occurred when trying to update ${item.description}'),
-      (data) => print('${item.description} was updated with value $newValue'),
+      (data) {
+        print('${item.description} was updated with value $newValue');
+
+        _getAllTodoItems();
+      },
     );
   }
 }

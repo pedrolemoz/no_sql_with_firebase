@@ -7,7 +7,7 @@ part of 'todo_repository_implementation.dart';
 // **************************************************************************
 
 final $TodoRepositoryImplementation = BindInject(
-  (i) => TodoRepositoryImplementation(i<FirebaseDataSource>()),
+  (i) => TodoRepositoryImplementation(i<RemoteDataSource>()),
   singleton: true,
   lazy: true,
 );

@@ -19,7 +19,7 @@ class ToggleItemValueInCollection implements AsyncUsecase<void, TodoItem> {
     if (item.description.isNotEmpty &&
         item.description != null &&
         item.description != '') {
-      return await repository.toggleItemValueInCollection(item);
+      return await repository.toggleItemValue(item);
     } else {
       return left(InvalidItemFailure());
     }

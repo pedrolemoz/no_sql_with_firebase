@@ -3,18 +3,20 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/usecases.dart';
+import '../entities/todo_item.dart';
 import '../repositories/todo_repository.dart';
 
 part 'get_all_items_from_collection.g.dart';
 
 @Injectable()
-class GetAllItemsFromCollection implements Usecase<Stream<dynamic>, NoParams> {
+class GetAllItemsFromCollection
+    implements AsyncUsecase<List<TodoItem>, NoParams> {
   final TodoRepository repository;
 
   GetAllItemsFromCollection(this.repository);
 
   @override
-  Either<Failure, Stream> call(NoParams params) {
-    return repository.getAllItemsFromCollection();
+  Future<Either<Failure, List<TodoItem>>> call(NoParams params) async {
+    return await repository.getAllItems();
   }
 }

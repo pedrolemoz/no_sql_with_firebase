@@ -19,7 +19,7 @@ class AddNewItemToCollection implements AsyncUsecase<void, TodoItem> {
     if (newItem.description.isNotEmpty &&
         newItem.description != null &&
         newItem.description != '') {
-      return await repository.addNewItemToCollection(newItem);
+      return await repository.addNewItem(newItem);
     } else {
       return left(InvalidItemFailure());
     }
