@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../infrastructure/datasources/firebase_datasource.dart';
-import '../models/todo_item_model.dart';
+import '../../infrastructure/models/todo_item_model.dart';
 
 part 'firebase_datasource_implementation.g.dart';
 
@@ -14,23 +14,19 @@ class FirebaseDataSourceImplementation implements FirebaseDataSource {
 
   @override
   Future<void> addNewItemToCollection({
-    String description,
-    bool value,
+    TodoItemModel itemModel,
     String collectionName,
-  }) async {
-    final newItem = TodoItemModel(description: description, value: value);
-
-    await firestore.collection(collectionName).add(newItem.toMap());
-  }
+  }) async =>
+      await firestore.collection(collectionName).add(itemModel.toMap());
 
   @override
-  Future<void> toggleItemValueInCollection(
-      {String description, bool value, String collectionName}) async {
-    final item = TodoItemModel(description: description, value: value);
-
+  Future<void> toggleItemValueInCollection({
+    TodoItemModel itemModel,
+    String collectionName,
+  }) async {
     final snapshot = await firestore
         .collection(collectionName)
-        .where('description', isEqualTo: description)
+        .where('description', isEqualTo: itemModel.description)
         .getDocuments();
 
     final documentID = snapshot.documents.first.documentID;
@@ -38,15 +34,17 @@ class FirebaseDataSourceImplementation implements FirebaseDataSource {
     await firestore
         .collection(collectionName)
         .document(documentID)
-        .updateData(item.toMap());
+        .updateData(itemModel.toMap());
   }
 
   @override
-  Future<void> deleteItemFromCollection(
-      {String description, String collectionName}) async {
+  Future<void> deleteItemFromCollection({
+    TodoItemModel itemModel,
+    String collectionName,
+  }) async {
     final snapshot = await firestore
         .collection(collectionName)
-        .where('description', isEqualTo: description)
+        .where('description', isEqualTo: itemModel.description)
         .getDocuments();
 
     final documentID = snapshot.documents.first.documentID;

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:no_sql_with_firebase/app/modules/todo_list/infrastructure/models/todo_item_model.dart';
 
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
@@ -20,8 +21,7 @@ class TodoRepositoryImplementation implements TodoRepository {
     try {
       return right(
         await dataSource.addNewItemToCollection(
-          description: newItem.description,
-          value: newItem.value,
+          itemModel: TodoItemModel.fromEntity(item: newItem),
           collectionName: 'todo_items',
         ),
       );
@@ -36,8 +36,7 @@ class TodoRepositoryImplementation implements TodoRepository {
     try {
       return right(
         await dataSource.toggleItemValueInCollection(
-          description: item.description,
-          value: item.value,
+          itemModel: TodoItemModel.fromEntity(item: item),
           collectionName: 'todo_items',
         ),
       );
@@ -51,7 +50,7 @@ class TodoRepositoryImplementation implements TodoRepository {
     try {
       return right(
         await dataSource.deleteItemFromCollection(
-          description: item.description,
+          itemModel: TodoItemModel.fromEntity(item: item),
           collectionName: 'todo_items',
         ),
       );

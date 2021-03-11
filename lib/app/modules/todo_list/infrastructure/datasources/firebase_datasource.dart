@@ -1,20 +1,20 @@
+import '../models/todo_item_model.dart';
+
 abstract class FirebaseDataSource {
   Stream<dynamic> getAllItemsFromCollection();
 
   Future<void> addNewItemToCollection({
-    String description,
-    bool value,
+    TodoItemModel itemModel,
     String collectionName,
   });
 
   Future<void> deleteItemFromCollection({
-    String description,
+    TodoItemModel itemModel,
     String collectionName,
   });
 
   Future<void> toggleItemValueInCollection({
-    String description,
-    bool value,
+    TodoItemModel itemModel,
     String collectionName,
   });
 }

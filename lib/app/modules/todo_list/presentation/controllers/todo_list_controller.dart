@@ -7,7 +7,7 @@ import '../../domain/usecases/add_new_item_to_collection.dart';
 import '../../domain/usecases/delete_item_from_collection.dart';
 import '../../domain/usecases/get_all_items_from_collection.dart';
 import '../../domain/usecases/toggle_item_value_in_collection.dart';
-import '../../external/models/todo_item_model.dart';
+import '../../infrastructure/models/todo_item_model.dart';
 
 part 'todo_list_controller.g.dart';
 

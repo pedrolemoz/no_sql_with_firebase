@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../external/models/todo_item_model.dart';
+import '../../infrastructure/models/todo_item_model.dart';
 import '../controllers/todo_list_controller.dart';
 import '../widgets/delete_item_dialog.dart';
 import '../widgets/new_item_dialog.dart';
